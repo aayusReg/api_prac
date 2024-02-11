@@ -115,7 +115,39 @@ class LabelController {
   };
   updateLabel = async (req, res, next) => {
     try {
-    } catch (error) {}
+      let current_data = await this.label_svc.getLabelById(req.params.id);
+      let data = req.body;
+      if (req.file) {
+        data.image = req.file.filename;
+      } else {
+        data.image = current_data.image;
+      }
+      data.type = req.params.type;
+
+      if (!data.link || data.link == "null") {
+        if (req.params.type === "banner") {
+          data.link = slugify(data.title, {
+            lower: true,
+          });
+        }else{
+            data.link=current_data.link
+        }
+      }
+
+      this.label_svc.validateLabel(data);
+      let updateLabel = await this.label_svc.updateLabelById(req.params.id);
+      res.json({
+        result: updateLabel,
+        status: true,
+        msg: `${data.type} is updated`,
+      });
+    } catch (error) {
+      console.log("update label error ", error);
+      next({
+        status: 400,
+        msg: error,
+      });
+    }
   };
 }
 

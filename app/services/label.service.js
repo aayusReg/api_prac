@@ -51,6 +51,10 @@ class LabelService {
   deleteLabelById = async (id) => {
     return await LabelModel.findByIdAndDelete(id);
   };
-  updateLabelById = async (type, id) => {};
+  updateLabelById = async (id) => {
+    return await LabelModel.findByIdAndUpdate(id,{
+        $set:this.data
+    })
+  };
 }
 module.exports = LabelService;
