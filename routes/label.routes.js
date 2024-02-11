@@ -16,7 +16,8 @@ const validateType = (req, res, next) => {
   }
 };
 
-router.route("/:type")
+router
+  .route("/:type")
   .post(
     validateType,
     auth,
@@ -26,8 +27,16 @@ router.route("/:type")
   )
   .get(validateType, label_ctrl.getAllLabel);
 
-  router.route('/:type/:id')
-    .get(validateType,label_ctrl.getLabel)
-
+router
+  .route("/:type/:id")
+  .get(validateType, label_ctrl.getLabel)
+  .delete(validateType, auth, isAdmin, label_ctrl.deleteLabel)
+  .put(
+    validateType,
+    auth,
+    isAdmin,
+    uploader.single("image"),
+    label_ctrl.updateLabel
+  );
 
 module.exports = router;

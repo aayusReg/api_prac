@@ -8,7 +8,7 @@ class LabelService {
         link: Joi.string(),
         type: Joi.string().valid("brand", "banner").default("banner"),
         image: Joi.string(),
-        status: Joi.string().valid("active", "inactive").default('inactive'),
+        status: Joi.string().valid("active", "inactive").default("inactive"),
       });
       let response = LabelSchema.validate(data);
       if (response.error) {
@@ -29,24 +29,28 @@ class LabelService {
       throw error;
     }
   };
-  getAllCount=async(type)=>{
-    let data= await LabelModel.find({
-        type:type
-    })
-    return data.length
-  }
-  getAllLabel=async(type,skip,limit)=>{
-    let filter={
-        type:type
-    }
-       return await LabelModel.find(filter).skip(skip).limit(limit)
-  }
-  getLabelById=async(type,id)=>{
-    let filter={
-        type:type,
-        _id:id
-    }
-    return await LabelModel.find(filter)
-  }
+  getAllCount = async (type) => {
+    let data = await LabelModel.find({
+      type: type,
+    });
+    return data.length;
+  };
+  getAllLabel = async (type, skip, limit) => {
+    let filter = {
+      type: type,
+    };
+    return await LabelModel.find(filter).skip(skip).limit(limit);
+  };
+  getLabelById = async (type, id) => {
+    let filter = {
+      type: type,
+      _id: id,
+    };
+    return await LabelModel.find(filter);
+  };
+  deleteLabelById = async (id) => {
+    return await LabelModel.findByIdAndDelete(id);
+  };
+  updateLabelById = async (type, id) => {};
 }
 module.exports = LabelService;
