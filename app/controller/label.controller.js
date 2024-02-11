@@ -40,7 +40,7 @@ class LabelController {
         per_page: req.query.per_page ?? 10,
         current_page: req.query.page ?? 1,
       };
-      console.log(paginate.all_count)
+      console.log(paginate.all_count);
       let skip = (paginate.current_page - 1) * paginate.per_page;
       let data = await this.label_svc.getAllLabel(
         req.params.type,
@@ -65,7 +65,29 @@ class LabelController {
   };
   getLabel = async (req, res, next) => {
     try {
-    } catch (error) {}
+      let data = await this.label_svc.getLabelById(
+        req.params.type,
+        req.params.id
+      );
+      if (data) {
+        res.json({
+          status: true,
+          result: data,
+          msg: `${data[0].type} fetched`,
+        });
+      } else {
+        next({
+          status: 404,
+          msg: "data does not exist",
+        });
+      }
+    } catch (error) {
+      console.log("get label error: ", error);
+      next({
+        status: 400,
+        msg: error,
+      });
+    }
   };
   deleteLabel = async (req, res, next) => {
     try {

@@ -41,5 +41,12 @@ class LabelService {
     }
        return await LabelModel.find(filter).skip(skip).limit(limit)
   }
+  getLabelById=async(type,id)=>{
+    let filter={
+        type:type,
+        _id:id
+    }
+    return await LabelModel.find(filter)
+  }
 }
 module.exports = LabelService;

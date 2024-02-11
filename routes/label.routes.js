@@ -24,5 +24,10 @@ router.route("/:type")
     uploader.single("image"),
     label_ctrl.registerLabel
   )
-  .get(validateType,label_ctrl.getAllLabel)
+  .get(validateType, label_ctrl.getAllLabel);
+
+  router.route('/:type/:id')
+    .get(validateType,label_ctrl.getLabel)
+
+
 module.exports = router;
