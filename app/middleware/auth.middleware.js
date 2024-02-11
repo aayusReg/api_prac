@@ -3,6 +3,8 @@ const UserService = require("../services/auth.service");
 const { JWT_SECRET } = require("../../config/config");
 const user_svc = new UserService();
 const auth = async (req, res, next) => {
+ 
+
   try {
     let token = null;
     if (req.headers["authorization"]) {
@@ -19,9 +21,9 @@ const auth = async (req, res, next) => {
         msg: "token not provided",
       });
     } else {
-      let token_split = token.split();
+      let token_split = token.split(' ');
       token = token_split.pop();
-      if (token === null) {
+           if (token === null) {
         next({
           status: 401,
           msg: "token not provided",
