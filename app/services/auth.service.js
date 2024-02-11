@@ -39,6 +39,9 @@ class UserService {
       email: data.email,
     });
   };
+  findUserById=async(data)=>{
+    return await UserModel.findById(data)
+  }
 }
 
 module.exports = UserService;
