@@ -1,4 +1,5 @@
 const Joi=require('joi')
+const UserModel = require('../model/auth.model')
 
 class UserService{
     validateUser=(data)=>{
@@ -20,6 +21,14 @@ class UserService{
             }
         } catch (error) {
             console.log('Validation error: ',error)
+            throw error
+        }
+    }
+    registerUser=async()=>{
+        try {
+            let user_obj=new UserModel(this.data)
+            return await user_obj.save()
+        } catch (error) {
             throw error
         }
     }
